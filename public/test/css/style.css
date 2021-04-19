@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+.show{
+  position: absolute;
+  right: 13px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #222;
+  cursor: pointer;
+  display: none;
+  font-family: 'Montserrat',sans-serif;
+}
+.password:valid ~ .show{
+  display: block;
+}
+.space{
+  margin-top: 16px;
+}
+.pass{
+  text-align: left;
+  margin: 10px 0;
+}
+.pass a{
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+.pass:hover a{
+  text-decoration: underline;
+}
+input[type="submit"]{
+  background-color: #3498db;
+  border: 1px solid #2691d9;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 1px;
+  cursor: pointer;
+  font-family: 'Montserrat',sans-serif;
+}
+input[type="submit"]:hover{
+  background-color: #3498db;
+}
