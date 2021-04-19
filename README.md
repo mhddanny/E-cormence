@@ -60,3 +60,32 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Development Kit (Firsr Time)
+   Composer intall
+   npm Install
+   
+set up .env File:
+  - set DB_Databse = e-cormence
+  - set DB_usesename = admin
+  - set DB_Password = P@ssword123
+
+ ## Development (pulling/retching)
+           composer update
+           php artisan migrate:fresh --seed
+           
+ ## Development (KEY)
+            php artisan key:generate
+            
+   
+## Default User
+ 
+Admin
+ - username : Admin
+ - Password : admin
+ 
+Staff 
+ - username : egi
+ - Password : egi123
+ -
+ 
