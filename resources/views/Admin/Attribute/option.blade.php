@@ -69,7 +69,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" name="tombol" class="btn btn-info pull-right">Save</button>
+                <button type="submit" name="tombol" class="btn btn-info pull-right">Save</button> 
               </div>
             </form>
           </div>

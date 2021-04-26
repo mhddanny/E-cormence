@@ -173,8 +173,8 @@ class AttributeController extends Controller
         }
         
         $attributeoption = AttributeOption::find($id);
-        $data = $attributeoption->attribute;
-
+        $data = $attributeoption->atribute;
+        // dd($attributeoption->all());
         return view('Admin.Attribute.option', [$id], compact('attributeoption', 'data'));
 
     }
@@ -189,7 +189,7 @@ class AttributeController extends Controller
         $attributeoption = AttributeOption::find($id);
         $input = $request->all();
         $validator = Validator::make($input,[
-            'name' => 'required|min:3|max:255|unique:attribute_options,name,'.$id
+            'name' => 'required|max:255|unique:attribute_options,name,'.$id
         ]);
 
         if ($validator->fails()) {
@@ -200,7 +200,7 @@ class AttributeController extends Controller
         $attributeoption->update($input);
         alert()->success('Success', 'Attribute entered Successfully');
 
-        return redirect()->route('attributeoption', [$id]);
+        return redirect()->route('attribute_edit', [$id]);
 
     }
 
