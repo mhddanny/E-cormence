@@ -12,8 +12,11 @@ class Produk extends Model
     protected $table = 'produks';
     protected $primaryKey = 'kd_produk';
     protected $fillable = [
+      'parent_id',
+      'user_id',
       'kd_kategori',
       'kode',
+      'type',
       'name',
       'price',
       'weight',
@@ -28,6 +31,21 @@ class Produk extends Model
       return $this->belongsTo(User::class);
     }
 
+    public function produkInventory()
+    {
+      return $this->hasOne(ProdukInventory::class,'kd_produk');
+    }
+
+    public function variants()
+    {
+      return $this->hasMany(Produk::class, 'parent_id')->orderBy('price', 'ASC');
+    }
+
+    public function parent()
+    {
+      return $this->belongsTo(Produk::class, 'parent_id');
+    }
+
     public function category()
     {
       return $this->belongsTo(Category::class, 'kd_kategori');
@@ -38,11 +56,30 @@ class Produk extends Model
       return $this->hasMany(ProdukImage::class,'kd_produk');
     }
 
+    public function produkAtrributeValues()
+    {
+      return $this->hasMany(ProdukAttributeValue::class);
+    }
+
     public static function statuses()
     {
        return [
-         0 => 'draft',
-         1 => 'active',
+         0 => 'Draft',
+         1 => 'Active',
        ];
+    }
+
+    public static function types()
+    {
+      return [
+          'simple' => 'Simple',
+          'configurable' => 'Configurable'
+      ];
+    }
+
+    public function statusesLabel()
+    {
+      $statuses = $this->statuses();
+      return isset($this->status) ? $statuses[$this->status] : null ;
     }
 }

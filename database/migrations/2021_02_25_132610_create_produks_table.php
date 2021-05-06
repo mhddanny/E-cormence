@@ -20,10 +20,10 @@ class CreateProduksTable extends Migration
             $table->foreign('kd_kategori')->references('kd_kategori')->on('categories')->onDelete('cascade');
             $table->string('kode');
             $table->string('name');
-            $table->integer('price');
-            $table->integer('weight');
+            $table->integer('price')->nullable();
+            $table->integer('weight')->nullable();
             $table->text('description')->nullable();
-            $table->integer('status');
+            $table->integer('status')->nullable();
             $table->string('slug');
             $table->string('image',255)->nullable();
             $table->timestamps();

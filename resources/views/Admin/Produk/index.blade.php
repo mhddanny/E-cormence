@@ -46,7 +46,7 @@
                   @endif
               </div>
               <div class="card-body">
-                <table table id="example1" class="table table-bordered table-striped">
+                <table table id="data" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th width="5%">No</th>
@@ -66,7 +66,7 @@
                          <td>{{ $row->name }}</td>
                          <td>@rupiah($row->price)</td>
                          <td>{{ $row->weight }}</td>
-                         <td>{{ $row->status }}</td>
+                         <td>{{ $row->statusesLabel() }}</td>
                          <td>
                            <form class="" action="{{ route('produk.destroy',[$row->kd_produk]) }}" method="post" onsubmit="return confirm('Apakah Anda Yakin Akan Menghapus Dara ini ? ')">
                              @csrf
@@ -91,14 +91,18 @@
 @endsection
 
 @section('script')
-  <!-- DataTables -->
-  <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-  <script type="text/javascript">
+  <!-- DataTables  & Plugins -->
+<script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+ <script type="text/javascript">
       $(function () {
-        $("#example1").DataTable({
+        $("#data").DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "ordering": true,
+          "info": true,
           "responsive": true,
           "autoWidth": false,
         });

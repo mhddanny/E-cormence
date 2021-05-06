@@ -49,6 +49,16 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12">
+
+                      <div class="form-group produk-type">
+                        <label for="type">Type</label>
+                        <select class="custom-select produk-type" name="type" id="produk-type">
+                          <option value="">None</option>
+                          <option value="simple">Simple</option>
+                          <option value="configurable">Configurable</option>
+                        </select>
+                      </div>
+
                       <div class="form-group {{ $errors->has('kode') ? 'has-error' : '' }}">
                         <label for="kode">Kode</label>
                         <input name="kode" type="text" class="form-control  @error('kode') is-invalid @enderror" value="{{ old('kode') }}"  placeholder="Enter Kode" >
@@ -76,75 +86,24 @@
                               @endforeach
                         </select>
                       </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-                        <label for="price">Price</label>
-                        <input name="price" type="number" class="form-control  @error('price') is-invalid @enderror" value="{{ old('price') }}"  placeholder=".00" >
-                          @error('price')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                      </div>
 
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group {{ $errors->has('weight') ? 'has-error' : '' }}">
-                      <label for="weight">Weight (gram)</label>
-                      <input name="weight" type="number" class="form-control  @error('weight') is-invalid @enderror" value="{{ old('weight') }}"  placeholder="0" >
-                        @error('weight')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
+                      <div class="configurable-attributes" id="configurable-attributes">
+                        @if (!empty($configurableAttributes))
+                          <label class="text-primary mt-4">Configurable Attributes</label>                         
+                            <div class="form-group">
+                              @foreach ($configurableAttributes as $attribute)
+                                <label for="{{$attribute->code}}">{{ $attribute->code }}</label>
+                                <select class="custom-select" name="{{ $attribute->code. '[]' }}" multiple >
+                                  <option value="">None</option>
+                                  @foreach ($attribute->attributeOptions as $item)                                  
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                                </select>
+                              @endforeach
+                            </div>
+                        @endif
                       </div>
                     </div>
-                    <div class="col-10">
-                      <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control  @error('description') is-invalid @enderror" value="{{ old('description') }}"  >
-
-                        </textarea>
-                          @error('description')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                      </div>
-                    </div>
-
-                    <div class="col-10">
-                      <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="custom-select" name="status" >
-                          <option value="">-- Set Status --</option>
-                          <option value="0">Draff</option>
-                          <option value="1">Aktif</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="col-md-10">
-                      <div class="form-group">
-
-                        <div class="custom-file">
-                          <input type="file" name="image" class="custom-file-input @error('sku') is-invalid @enderror" value="{{ old('image') }}"  placeholder="Choose image" id="image">
-                          <label class="custom-file-label" for="customFile">Choose file</label>
-                          @error('path')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                        </div>
-                        {{-- <input type="file" name="image" placeholder="Choose image" id="image"> --}}
-                      </div>
-                    </div>
-                    <div class="col-md-10">
-                      <img id="preview-image-before-upload" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
-                      alt="preview image" style="max-height: 100px;">
-                    </div>
-
                   </div>
                   <!-- /.row -->
                   <!-- /.row -->
@@ -174,7 +133,21 @@
   <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
   <script src="{{ asset('AdminLTE/plugins/dropzone/min/dropzone.min.js') }}"></script>
   <script type="text/javascript">
+    function showHideconfigurableAttributes(){
+              var produkType = $("#produk-type").val();
+              if (produkType == "configurable") {
+                  $("#configurable-attributes").show();
+              } else {
+                  $("#configurable-attributes").hide();
+              }
+            }
+
             $(function () {
+              showHideconfigurableAttributes();
+              $("#produk-type").change(function() {
+                showHideconfigurableAttributes();
+              });
+
                 $('#datetimepicker4').datetimepicker({
                     format: 'L'
                 });

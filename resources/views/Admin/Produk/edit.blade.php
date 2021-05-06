@@ -35,7 +35,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="card card-default">
               <div class="card-header">
                 <h3 class="card-title">Produk Menu</h3>
@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-8">
+          <div class="col-lg-9">
             <div class="card card-default">
               <form action="{{ route('produk.update',[$produk->kd_produk]) }}" method="post" enctype="multipart/form-data" autocomplete="off">
                 @csrf
@@ -59,6 +59,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="row">
+
                     <div class="col-12">
                       <div class="form-group {{ $errors->has('kode') ? 'has-error' : '' }}">
                         <label for="kode">SKU</label>
@@ -92,83 +93,131 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-6">
-                      <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-                        <label for="price">Price</label>
-                        <input name="price" type="number" class="form-control  @error('price') is-invalid @enderror" value="{{ $produk->price }}"  placeholder=".00" >
-                          @error('price')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                      </div>
 
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group {{ $errors->has('weight') ? 'has-error' : '' }}">
-                      <label for="weight">Weight (gram)</label>
-                      <input name="weight" type="number" class="form-control  @error('weight') is-invalid @enderror" value="{{$produk->weight}}"  placeholder="0" >
-                        @error('weight')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
-                      </div>
-                    </div>
-                    <div class="col-10">
-                      <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control  @error('description') is-invalid @enderror" >
-                          {{ $produk->description}}
-                        </textarea>
-                          @error('description')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                      </div>
-                    </div>
-                    <div class="col-10">
-                      <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="custom-select" name="status" >
-                            <option value="">-- Set Status --</option>
-                            <option value="0" @if ($produk->status == "0") Selected @endif>Draff</option>
-                            <option value="1" @if ($produk->status == "1") Selected @endif>Active</option>
-                        </select>
-                      </div>
-                    </div>
+                    @if ($produk)
+                      @if ($produk->type == 'configurable')
+                        @include('Admin.Produk.configurable')
+                      @else
+                        @include('Admin.Produk.simpel')
+                      @endif
 
-                    <div class="col-md-10">
-                      <div class="form-group">
+                      {{-- <div class="col-4">
+                        <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
+                          <label for="price">Price (Rp)</label>
+                          <input name="price" type="number" class="form-control  @error('price') is-invalid @enderror" value="{{ $produk->price }}"  placeholder=".00" >
+                            @error('price')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
 
-                        <div class="custom-file">
-                          <input type="file" name="image" class="custom-file-input @error('sku') is-invalid @enderror" value="{{ old('image') }}"  placeholder="Choose image" id="image">
-                          <label class="custom-file-label" for="customFile">Choose file</label>
-                          @error('path')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group {{ $errors->has('weight') ? 'has-error' : '' }}">
+                        <label for="weight">Weight (gram)</label>
+                        <input name="weight" type="number" class="form-control  @error('weight') is-invalid @enderror" value="{{$produk->weight}}"  placeholder="0" >
+                          @error('weight')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
                           @enderror
                         </div>
-                        {{-- <input type="file" name="image" placeholder="Choose image" id="image"> --}}
                       </div>
-                    </div>
-                    <div class="col-md-10">
-                      @if (!$produk->image)
-                        <img id="preview-image-before-upload" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
-                        alt="preview image" style="max-height: 100px;">
-                      @else
-                        <img class="img_thumbnail" src="{{ asset('uploads/'.$produk->image) }}" alt="" width="100px">
-                      @endif
-                    </div>
+                      <div class="col-4">
+                        <div class="form-group {{ $errors->has('qty') ? 'has-error' : '' }}">
+                        <label for="qty">Jumlah Produk</label>
+                        <input name="qty" type="number" class="form-control  @error('qty') is-invalid @enderror" value="{{ $produk->qty }}"  placeholder="0" >
+                          @error('qty')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                        </div>
+                      </div>
+                  
+                      <div class="col-4">
+                        <div class="form-group {{ $errors->has('length') ? 'has-error' : '' }}">
+                        <label for="length">length (Cm)</label>
+                        <input name="length" type="number" class="form-control  @error('length') is-invalid @enderror" value="{{ $produk->length }}"  placeholder="0" >
+                          @error('length')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group {{ $errors->has('width') ? 'has-error' : '' }}">
+                        <label for="width">Width (Cm)</label>
+                        <input name="width" type="number" class="form-control  @error('width') is-invalid @enderror" value="{{ $produk->width }}"  placeholder="0" >
+                          @error('width')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="form-group {{ $errors->has('height') ? 'has-error' : '' }}">
+                        <label for="height">height (Cm)</label>
+                        <input name="height" type="number" class="form-control  @error('height') is-invalid @enderror" value="{{ $produk->height }}"  placeholder="0" >
+                          @error('height')
+                            <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                        </div>
+                      </div> --}}
 
-                    <!-- /.col -->
+                      <div class="col-10">
+                        <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
+                          <label for="description">Description</label>
+                          <textarea id="description" name="description" class="form-control  @error('description') is-invalid @enderror" >
+                            {{ $produk->description}}
+                          </textarea>
+                            @error('description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                      </div>
+                      <div class="col-10">
+                        <div class="form-group">
+                          <label for="status">Status</label>
+                          <select class="custom-select" name="status" >
+                              <option value="">-- Set Status --</option>
+                              <option value="0" @if ($produk->status == "0") Selected @endif>Draff</option>
+                              <option value="1" @if ($produk->status == "1") Selected @endif>Active</option>
+                          </select>
+                        </div>
+                      </div>
 
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-                  <!-- /.row -->
+                      <div class="col-md-10">
+                        <div class="form-group">
+                          <div class="custom-file">
+                            <input type="file" name="image" class="custom-file-input @error('sku') is-invalid @enderror" value="{{ old('image') }}"  placeholder="Choose image" id="image">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                            @error('path')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-10">
+                        @if (!$produk->image)
+                          <img id="preview-image-before-upload" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
+                          alt="preview image" style="max-height: 100px;">
+                        @else
+                          <img class="img_thumbnail" src="{{ asset('uploads/'.$produk->image) }}" alt="" width="100px">
+                        @endif
+                      </div>
+                    @endif
+                  </div>  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
