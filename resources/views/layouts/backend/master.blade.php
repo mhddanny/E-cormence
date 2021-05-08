@@ -4,27 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title')</title>
+  <title>{{ $title }}</title>
 
   @include('layouts.backend.asset_header')
 
+  @stack('css')
   </head>
 <body class="hold-transition sidebar-mini layout-fixed">
   @include('sweet::alert')
 
 <div class="wrapper">
-
   <!-- Navbar -->
-  @include('layouts.backend.navbar')
+  <x-navbar/>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  @include('layouts.backend.sidebar')
-
+  <x-sidebar/>
+  
+  {{ $slot }}
   <!-- Content Wrapper. Contains page content -->
-  @yield('section')
   <!-- /.content-wrapper -->
-  @include('layouts.backend.footer')
+  <x-footer/>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -35,6 +35,7 @@
 <!-- ./wrapper -->
 
   @include('layouts.backend.asset_footer')
-
+  
+  @stack('script')
 </body>
 </html>

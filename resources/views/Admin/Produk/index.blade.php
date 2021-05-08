@@ -1,17 +1,10 @@
-@extends('layouts.backend.master')
+<x-master-layout title="Admin | Produks">
+  @push('css')
+      <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  @endpush
 
-@section('title')
-  Admin | Index Produks
-@endsection
-
-@section('css')
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-
-@endsection
-
-@section('section')
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -88,25 +81,25 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
 
-@section('script')
-  <!-- DataTables  & Plugins -->
-<script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
- <script type="text/javascript">
-      $(function () {
-        $("#data").DataTable({
-          "paging": true,
-          "lengthChange": true,
-          "ordering": true,
-          "info": true,
-          "responsive": true,
-          "autoWidth": false,
-        });
-      });
-  </script>
+  @push('script')
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript">
+          $(function () {
+            $("#data").DataTable({
+              "paging": true,
+              "lengthChange": true,
+              "ordering": true,
+              "info": true,
+              "responsive": true,
+              "autoWidth": false,
+            });
+          });
+      </script>
+  @endpush()
 
-@endsection
+</x-master-layout>

@@ -1,14 +1,4 @@
-@extends('layouts.backend.master')
-
-@section('title')
-  Admin | Create Category
-@endsection
-
-@section('css')
-
-@endsection
-
-@section('section')
+<x-master-layout title="Admin | Create Category">
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -109,10 +99,7 @@
       </div>
     </section>
   </div>
-
-@endsection
-
-@section('script')
+  @push('script')
   <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
   <script type="text/javascript">
             $(function () {
@@ -123,5 +110,6 @@
             $(document).ready(function () {
               bsCustomFileInput.init();
             });
-  </script>
-@endsection
+  </script>    
+  @endpush
+</x-master-layout>

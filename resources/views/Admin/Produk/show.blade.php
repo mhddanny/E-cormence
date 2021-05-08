@@ -1,18 +1,9 @@
-@extends('layouts.backend.master')
-
-@section('title')
-  Admin | Show Produk
-@endsection
-
-@section('css')
-  <!-- CodeMirror -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/codemirror.css') }}">
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/theme/monokai.css') }}">
-
-
-@endsection
-
-@section('section')
+<x-master-layout title="Admin | Show Produk {{ $produk->name }}">
+  @push('css')
+      <!-- CodeMirror -->
+      <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/codemirror.css') }}">
+      <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/theme/monokai.css') }}">    
+  @endpush
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -193,36 +184,32 @@
       </div>
     </section>
   </div>
+  @push('script')
+      <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+      <!-- CodeMirror -->
+      <script src="{{ asset('AdminLTE/plugins/codemirror/codemirror.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/codemirror/mode/css/css.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/codemirror/mode/xml/xml.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
 
-@endsection
+      <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker4').datetimepicker({
+                        format: 'L'
+                    });
+                    // Summernote
+                    $('#summernote').summernote()
+                    $('#description').summernote()
 
-@section('script')
-
-  <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-  <!-- CodeMirror -->
-  <script src="{{ asset('AdminLTE/plugins/codemirror/codemirror.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/css/css.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/xml/xml.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
-
-  <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker4').datetimepicker({
-                    format: 'L'
+                    // CodeMirror
+                    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                      mode: "htmlmixed",
+                      theme: "monokai"
+                    });
                 });
-                // Summernote
-                $('#summernote').summernote()
-                $('#description').summernote()
-
-                // CodeMirror
-                CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                  mode: "htmlmixed",
-                  theme: "monokai"
+                $(document).ready(function () {
+                  bsCustomFileInput.init();
                 });
-            });
-            $(document).ready(function () {
-              bsCustomFileInput.init();
-            });
-  </script>
-
-@endsection
+      </script>    
+  @endpush
+</x-master-layout>

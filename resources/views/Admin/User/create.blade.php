@@ -1,14 +1,4 @@
-@extends('layouts.backend.master')
-
-@section('title')
-  Admin | Create User
-@endsection
-
-@section('css')
-
-@endsection
-
-@section('section')
+<x-master-layout title="Admin | Create User">
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -119,41 +109,37 @@
       </div>
     </div>
   </section>
+  @push('script')
+      <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+      <script type="text/javascript">
+                $(function () {
+                    // Listen for click events
+                    document.addEventListener('click', function (event) {
 
+                        // If the clicked element isn't our show password checkbox, bail
+                        if (event.target.id !== 'show_password') return;
 
-@endsection
+                        // Get the password field
+                        var password = document.querySelector('#password');
+                        if (!password) return;
 
-@section('script')
-  <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-  <script type="text/javascript">
-            $(function () {
-                // Listen for click events
-                document.addEventListener('click', function (event) {
+                        // Check if the password should be shown or hidden
+                        if (event.target.checked) {
+                            // Show the password
+                            password.type = 'text';
+                        } else {
+                            // Hide the password
+                            password.type = 'password';
+                        }
 
-                    // If the clicked element isn't our show password checkbox, bail
-                    if (event.target.id !== 'show_password') return;
+                    }, false);
 
-                    // Get the password field
-                    var password = document.querySelector('#password');
-                    if (!password) return;
+                });
+                $(document).ready(function () {
+                  bsCustomFileInput.init();
+                });
 
-                    // Check if the password should be shown or hidden
-                    if (event.target.checked) {
-                        // Show the password
-                        password.type = 'text';
-                    } else {
-                        // Hide the password
-                        password.type = 'password';
-                    }
-
-                }, false);
-
-            });
-            $(document).ready(function () {
-              bsCustomFileInput.init();
-            });
-
-  </script>
-
-
-@endsection
+      </script>
+      
+  @endpush
+</x-master-layout>

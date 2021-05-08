@@ -1,19 +1,12 @@
-@extends('layouts.backend.master')
+<x-master-layout title="Admin | Create Produk">
+  @push('css')
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/codemirror.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/theme/monokai.css') }}">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/dropzone/min/dropzone.min.css') }}">  
+  @endpush
 
-@section('title')
-  Admin | Create Product
-@endsection
-
-@section('css')
-  <!-- CodeMirror -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/codemirror.css') }}">
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/theme/monokai.css') }}">
-  <!-- dropzonejs -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/dropzone/min/dropzone.min.css') }}">
-
-@endsection
-
-@section('section')
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -121,82 +114,80 @@
       </div>
     </section>
 
-
-@endsection
-
-@section('script')
-  <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-  <!-- CodeMirror -->
-  <script src="{{ asset('AdminLTE/plugins/codemirror/codemirror.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/css/css.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/xml/xml.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/dropzone/min/dropzone.min.js') }}"></script>
-  <script type="text/javascript">
-    function showHideconfigurableAttributes(){
-              var produkType = $("#produk-type").val();
-              if (produkType == "configurable") {
-                  $("#configurable-attributes").show();
-              } else {
-                  $("#configurable-attributes").hide();
-              }
-            }
-
-            $(function () {
-              showHideconfigurableAttributes();
-              $("#produk-type").change(function() {
-                showHideconfigurableAttributes();
-              });
-
-                $('#datetimepicker4').datetimepicker({
-                    format: 'L'
-                });
-                // Summernote
-                $('#summernote').summernote()
-                $('#description').summernote()
-
-                // CodeMirror
-                CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                  mode: "htmlmixed",
-                  theme: "monokai"
-                });
-            });
-
-            $(document).ready(function (e) {
-              bsCustomFileInput.init();
-              $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-              });
-            $('#image').change(function(){
-              let reader = new FileReader();
-              reader.onload = (e) => {
-                  $('#preview-image-before-upload').attr('src', e.target.result);
+    @push('script')
+      <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+      <!-- CodeMirror -->
+      <script src="{{ asset('AdminLTE/plugins/codemirror/codemirror.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/codemirror/mode/css/css.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/codemirror/mode/xml/xml.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
+      <script src="{{ asset('AdminLTE/plugins/dropzone/min/dropzone.min.js') }}"></script>
+      <script type="text/javascript">
+        function showHideconfigurableAttributes(){
+                  var produkType = $("#produk-type").val();
+                  if (produkType == "configurable") {
+                      $("#configurable-attributes").show();
+                  } else {
+                      $("#configurable-attributes").hide();
                   }
-              reader.readAsDataURL(this.files[0]);
-            });
-            $('#image-upload').submit(function(e) {
-                e.preventDefault();
-                var formData = new FormData(this);
-                  $.ajax({
-                      type:'POST',
-                      url: "{{ url('upload')}}",
-                      data: formData,
-                      cache:false,
-                      contentType: false,
-                      processData: false,
-                      success: (data) => {
-                          this.reset();
-                          alert('Image has been uploaded using jQuery ajax successfully');
-                      },
-                      error: function(data){
-                      console.log(data);
-                      }
+                }
+    
+                $(function () {
+                  showHideconfigurableAttributes();
+                  $("#produk-type").change(function() {
+                    showHideconfigurableAttributes();
+                  });
+    
+                    $('#datetimepicker4').datetimepicker({
+                        format: 'L'
+                    });
+                    // Summernote
+                    $('#summernote').summernote()
+                    $('#description').summernote()
+    
+                    // CodeMirror
+                    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                      mode: "htmlmixed",
+                      theme: "monokai"
                     });
                 });
-            });
-
-  </script>
-
-@endsection
+    
+                $(document).ready(function (e) {
+                  bsCustomFileInput.init();
+                  $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                  });
+                $('#image').change(function(){
+                  let reader = new FileReader();
+                  reader.onload = (e) => {
+                      $('#preview-image-before-upload').attr('src', e.target.result);
+                      }
+                  reader.readAsDataURL(this.files[0]);
+                });
+                $('#image-upload').submit(function(e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                      $.ajax({
+                          type:'POST',
+                          url: "{{ url('upload')}}",
+                          data: formData,
+                          cache:false,
+                          contentType: false,
+                          processData: false,
+                          success: (data) => {
+                              this.reset();
+                              alert('Image has been uploaded using jQuery ajax successfully');
+                          },
+                          error: function(data){
+                          console.log(data);
+                          }
+                        });
+                    });
+                });
+    
+      </script>     
+    @endpush
+    
+</x-master-layout>

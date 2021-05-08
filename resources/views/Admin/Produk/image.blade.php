@@ -1,20 +1,12 @@
-@extends('layouts.backend.master')
-
-@section('title')
-  Admin | Edit Product Images {{ $produk->slug }}
-@endsection
-
-@section('css')
-
+<x-master-layout title="Admin | Edit Images Produk {{ $produk->slug }}">
+  @push('css')
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <!-- CodeMirror -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/codemirror.css') }}">
-    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/theme/monokai.css') }}">
-@endsection
-
-@section('section')
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/codemirror/theme/monokai.css') }}">  
+  @endpush
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -143,85 +135,81 @@
       </div>
     </div>
   </div>
-
-
-
-@endsection
-
-@section('script')
-  <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-  <!-- CodeMirror -->
-  <script src="{{ asset('AdminLTE/plugins/codemirror/codemirror.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/css/css.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/xml/xml.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
-  <!-- DataTables -->
-  <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-  <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-  <script type="text/javascript">
-      $(function () {
-        $("#example1").DataTable({
-          "responsive": true,
-          "autoWidth": false,
-        });
-      });
-  </script>
-
-  <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker4').datetimepicker({
-                    format: 'L'
-                });
-                // Summernote
-                $('#summernote').summernote()
-                $('#description').summernote()
-
-                // CodeMirror
-                CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                  mode: "htmlmixed",
-                  theme: "monokai"
-                });
-            });
-            $(document).ready(function () {
-              bsCustomFileInput.init();
-            });
-  </script>
-  <script type="text/javascript">
-      $(document).ready(function (e) {
-        $.ajaxSetup({
-          headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
-      $('#image').change(function(){
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            $('#preview-image-before-upload').attr('src', e.target.result);
-            }
-        reader.readAsDataURL(this.files[0]);
-      });
-      $('#image-upload').submit(function(e) {
-          e.preventDefault();
-          var formData = new FormData(this);
-            $.ajax({
-                type:'POST',
-                url: "{{ url('upload')}}",
-                data: formData,
-                cache:false,
-                contentType: false,
-                processData: false,
-                success: (data) => {
-                    this.reset();
-                    alert('Image has been uploaded using jQuery ajax successfully');
-                },
-                error: function(data){
-                console.log(data);
-                }
-              });
+  @push('script')
+    <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <!-- CodeMirror -->
+    <script src="{{ asset('AdminLTE/plugins/codemirror/codemirror.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/codemirror/mode/css/css.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/codemirror/mode/xml/xml.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
+    <!-- DataTables -->
+    <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
           });
-      });
-  </script>
+        });
+    </script>
 
-@endsection
+    <script type="text/javascript">
+              $(function () {
+                  $('#datetimepicker4').datetimepicker({
+                      format: 'L'
+                  });
+                  // Summernote
+                  $('#summernote').summernote()
+                  $('#description').summernote()
+
+                  // CodeMirror
+                  CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                    mode: "htmlmixed",
+                    theme: "monokai"
+                  });
+              });
+              $(document).ready(function () {
+                bsCustomFileInput.init();
+              });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+          $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+        $('#image').change(function(){
+          let reader = new FileReader();
+          reader.onload = (e) => {
+              $('#preview-image-before-upload').attr('src', e.target.result);
+              }
+          reader.readAsDataURL(this.files[0]);
+        });
+        $('#image-upload').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+              $.ajax({
+                  type:'POST',
+                  url: "{{ url('upload')}}",
+                  data: formData,
+                  cache:false,
+                  contentType: false,
+                  processData: false,
+                  success: (data) => {
+                      this.reset();
+                      alert('Image has been uploaded using jQuery ajax successfully');
+                  },
+                  error: function(data){
+                  console.log(data);
+                  }
+                });
+            });
+        });
+    </script>
+    
+  @endpush
+</x-master-layout>

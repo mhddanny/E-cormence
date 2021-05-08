@@ -1,14 +1,4 @@
-@extends('layouts.backend.master')
-
-@section('title')
-  Admin | Dashboard
-@endsection
-
-@section('css')
-
-@endsection
-
-@section('section')
+<x-master-layout title="Admin | Dashboard">
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -70,8 +60,6 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
 
-@section('script')
+</x-master-layout>
 
-@endsection

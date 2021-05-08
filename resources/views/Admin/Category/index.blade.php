@@ -1,17 +1,9 @@
-@extends('layouts.backend.master')
-
-@section('title')
-  Admin | Index Categoris
-@endsection
-
-@section('css')
-  <!-- DataTables -->
+<x-master-layout title="Admin | Categories">
+  @push('css')
+    <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-
-@endsection
-
-@section('section')
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">    
+  @endpush
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -84,9 +76,7 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
-
-@section('script')
+  @push('script')
   <!-- DataTables -->
   <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -99,6 +89,6 @@
           "autoWidth": false,
         });
       });
-  </script>
-
-@endsection
+  </script>    
+  @endpush
+</x-master-layout>
