@@ -44,7 +44,7 @@
               </div>
 
               <div class="row">
-                <div class="col-5 col-sm-3">
+                <div class="col-sm-3">
                   <div class="nav flex-column nav-tabs" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                     @if (!empty($kategories))
 
@@ -73,13 +73,21 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-12 col-sm-6">
-                            <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
+                            <h3 class="d-inline-block d-sm-none">{{$produk->name}}</h3>
                             <div class="col-12">
-                              @if (!$produk->image)
+                              @if ($produk->produkImages->first())
+                                <img src="{{ asset('uploads/'.$produk->produkImages->first()->path) }}" class="product-image" style="width:400px;height:450px;" alt="Product Image">
+                              @else
                                 <img src="{{ asset('no_image.jpeg') }}"  style="width:400px;height:450px;" class="img-thumbnail" alt="...">
-                                @else
-                                <img src="{{ asset('uploads/'.$produk->image) }}" class="product-image" style="width:400px;height:450px;" alt="Product Image">
                               @endif
+                            </div>
+
+                            <div class="col-12 product-image-thumbs">
+                              @forelse ($produk->produkImages as $image)
+                                <div class="product-image-thumb"><img src="{{ asset('uploads/'.$image->path) }}" alt="Product Image"></div>
+                              @empty
+                                <div class="product-image-thumb" ><img src="{{ asset('no_image.jpeg') }}" alt="Product Image"></div>
+                              @endforelse 
                             </div>
 
                           </div>
@@ -98,6 +106,28 @@
                                   readonly class="form-control">
                                 @endif --}}
                               </p>
+                              @if ($produk->type == 'configurable')
+                              <div class="quick-view-select">
+                                <div class="select-option-part">
+                                  <label>Size*</label>
+                                  <select class="custom-select" name="size" id="size">
+                                    <option value="">Pilih Size</option>
+                                    @foreach ($produk['sizes'] as $item)
+                                      <option value="{{ $produk->kd_produk }}">{{ $item }}</option>                                        
+                                    @endforeach
+                                  </select>
+                                </div>
+                                <div class="select-option-part">
+                                  <label>Color*</label>
+                                  <select class="custom-select" name="color" id="color">
+                                    <option value="">Pilih Color</option>
+                                    @foreach ($produk['colors'] as $item)
+                                      <option value="{{ $produk->kd_produk }}">{{ $item }}</option>                                      
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              @endif
                               <hr>
                               <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                                 class="increase items-count" type="button">
@@ -112,17 +142,14 @@
                               </button>
 
                               <div class="bg-primary color-palette py-2 px-3 mt-4">
-                                <h2 class="mb-0">
-                                  @rupiah($produk->price)
-                                </h2>
-                                <h4 class="mt-0">
-                                  <small>Ex Tax: @rupiah($produk->price) </small>
-                                </h4>
+                                <h5 class="mb-0">
+                                  @rupiah($produk->price_label())
+                                </h5>
                               </div>
 
                             <div class="mt-4">
                               <button type="submit" class="btn btn-success cart">
-                                <i class="fa fa-shopping-cart mr-2"></i>
+                                <i class="fas fa-cart-plus mr-2"></i>
                                 Add to cart
                               </button>
                             </div>
@@ -158,5 +185,14 @@
 @endsection
 
 @section('script')
-
+  <script>
+    $(document).ready(function() {
+    $('.product-image-thumb').on('click', function () {
+      var $image_element = $(this).find('img')
+      $('.product-image').prop('src', $image_element.attr('src'))
+      $('.product-image-thumb.active').removeClass('active')
+      $(this).addClass('active')
+    })
+  })
+  </script>
 @endsection

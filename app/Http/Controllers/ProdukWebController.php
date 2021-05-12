@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Produk;
+use App\Models\ProdukAttributeValue;
 
 class ProdukWebController extends Controller
 {
@@ -15,8 +16,9 @@ class ProdukWebController extends Controller
      */
      public function index()
      {
-       $kategories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('kategori', 'ASC')->get();
-       $produk = Produk::orderBy('created_at', 'DESC')->paginate(8);
+      $kategories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('kategori', 'ASC')->get();
+      //  $produk = Produk::orderBy('created_at', 'DESC')->paginate(8);
+      $produk = Produk::Active()->paginate(8);
 
        return view('Website.produk_web', compact('produk','kategories'));
      }
@@ -32,8 +34,16 @@ class ProdukWebController extends Controller
 
      public function produkDetail($slug)
      {
-         $produk = Produk::where('slug',$slug)->firstOrfail();
+        $produk = Produk::where('slug',$slug)->firstOrfail();
 
+        if (!$produk) {
+          return redirect('web.produk');
+        }
+
+        if ($produk->type == 'configurable') {
+            $produk['colors'] = ProdukAttributeValue::getAttributeOptions($produk, 'color')->pluck('text_value', 'text_value');
+            $produk['sizes'] = ProdukAttributeValue::getAttributeOptions($produk, 'size')->pluck('text_value', 'text_value');
+        }
          return view('Website.produk_detail', compact('produk'));
      }
 

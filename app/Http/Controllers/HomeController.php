@@ -10,17 +10,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all();
+        $produk = Produk::Active()->paginate(8);
         return view('Website.home_web', compact('produk'));
     }
 
     public function produk()
     {
       $kategories = Category::with(['child'])->withCount(['child'])->getParent()->orderBy('kategori', 'ASC')->get();
-      $produk = Produk::orderBy('created_at', 'DESC')->paginate(8);
-      // if (request()->slug) {
-        // $produk = Kategori::where('slug', $slug)->first()->produk()->orderBy('created_at', 'DESC')->paginate('12');
-
+      $produk = Produk::Active()->paginate(8);
+     
       return view('Website.produk_web', compact('produk','kategories'));
     }
 

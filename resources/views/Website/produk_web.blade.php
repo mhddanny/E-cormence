@@ -72,19 +72,19 @@
                       @forelse ($produk as $row)
                         <div class="col-md-3">
                           <div class="card mb-3 shadow-sm text-center" >
-                            @if (!$row->image)
+                            @if ($row->produkImages->first())
+                              <img src="{{ asset('uploads/'.$row->produkImages->first()->path) }}"  style="width:300px;height:250px;" class="img-thumbnail" alt="{{ $row->name }}">
+                            @else
                               <img src="{{ asset('no_image.jpeg') }}"  style="width:300px;height:250px;" class="img-thumbnail" alt="...">
-                              @else
-                                <img src="{{ asset('uploads/'.$row->image) }}"  style="width:300px;height:250px;" class="img-thumbnail" alt="...">
                             @endif
                             {{-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> --}}
                             <div class="card-body">
-                              <h4><span style="color:blue;font-weight:bold">@rupiah($row->price)</span></h4>
+                              <h4><span style="color:blue;font-weight:bold">@rupiah($row->price_label())</span></h4>
                               <p class="card-text">{{ $row->name}}</p>
                               <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                   {{-- <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa fa-shopping-cart"></i> Add to Cart</button> --}}
-                                  <a href="{{ url('/shop/'. $row->slug) }}" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"> View</i></a>
+                                  <a href="{{ url('/produk/shop/'. $row->slug) }}" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"> View</i></a>
                                 </div>
                                 <small class="text-muted">{{ $row->created_at->diffforHumans()}}</small>
                               </div>
@@ -99,7 +99,7 @@
                     </div>
                   </form>
                 </div>
-                {{-- {{ $produk->links() }} --}}
+                {{ $produk->links() }}
               </div>
             </div>
           </div>

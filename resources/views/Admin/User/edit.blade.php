@@ -92,6 +92,10 @@
                             @if ($user->level == 'admin')
                               Selected
                             @endif>Admin</option>
+                            <option value="staff"
+                            @if ($user->level == 'staff')
+                              Selected
+                            @endif>Staff</option>
                         </select>
                         @error('level')
                           <span class="invalid-feedback" role="alert">

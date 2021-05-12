@@ -33,13 +33,14 @@ class ProdukAttributeValue extends Model
 
     public static function getAttributeOptions($product, $attributeCode)
     {
-        $productVariantIDs = $product->variants->pluck('id');
+        $productVariantIDs = $product->variants->pluck('kd_produk');
+        
         $attribute = Atribute::where('code', $attributeCode)->first();
 
-        $attributeOptions = ProdukAttributeValue::where('attribute_id', $attribute->id)
+        $attributeOptions = ProdukAttributeValue::where('atribute_id', $attribute->id)
                             ->whereIn('kd_produk', $productVariantIDs)
                             ->get();
-
+        // dd($attributeOptions);
         return $attributeOptions;
     }
 }

@@ -53,7 +53,7 @@ class Produk extends Model
 
     public function produkImages()
     {
-      return $this->hasMany(ProdukImage::class,'kd_produk');
+      return $this->hasMany(ProdukImage::class,'kd_produk')->orderBy('id', 'DESC');
     }
 
     public function produkAtrributeValues()
@@ -81,5 +81,17 @@ class Produk extends Model
     {
       $statuses = $this->statuses();
       return isset($this->status) ? $statuses[$this->status] : null ;
+    }
+
+    public function scopeActive($query)
+    {
+      return $query->where('status', 1)
+              ->where('parent_id', NULL)
+              ->orderBy('created_at', 'DESC');
+    }
+
+    function price_label()
+    {
+      return ($this->variants->count() > 0) ? $this->variants->first()->price : $this->price;
     }
 }

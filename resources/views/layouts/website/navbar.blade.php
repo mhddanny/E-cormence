@@ -21,7 +21,7 @@
           <li class="nav-item">
             <a href="{{ route('web.produk') }}" class="nav-link">Produk</a>
           </li>
-        </ul>
+        </ul>      
       </div>
     </div>
     <!-- Right navbar links -->

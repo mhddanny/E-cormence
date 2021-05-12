@@ -9,11 +9,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route; 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/produks', [ProdukWebController::class, 'index'])->name('web.produk');
-Route::get('/shop/{produk}', [ProdukWebController::class, 'produkDetail'])->name('produkDetail');
+Route::get('/produk/shop/{produk}', [ProdukWebController::class, 'produkDetail'])->name('produkDetail');
 Route::get('/category/{slug}', [ProdukWebController::class, 'categoryProduk'])->name('web.category');
 
 Route::get('cart', [CartController::class, 'listCart'])->name('listCart');

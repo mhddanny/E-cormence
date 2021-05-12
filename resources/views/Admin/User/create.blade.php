@@ -85,6 +85,7 @@
                             <option value="">Pilih-Level</option>
                             <option value="superadmin">Super Admin</option>
                             <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
                         </select>
                         @error('level')
                           <span class="invalid-feedback" role="alert">
